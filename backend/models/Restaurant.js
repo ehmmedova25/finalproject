@@ -1,24 +1,18 @@
 import mongoose from 'mongoose';
 
-const restaurantSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  address: { type: String, required: true },
-  image: { type: String }, 
-  tags: [String],
-  location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      default: 'Point'
-    },
-    coordinates: {
-      type: [Number], 
-      required: true
-    }
-  }
-}, { timestamps: true });
+const dishSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  price: Number,
+  image: String,
+});
 
-restaurantSchema.index({ location: '2dsphere' });
+const restaurantSchema = new mongoose.Schema({
+  name: String,
+  location: String,
+  description: String,
+  menu: [dishSchema],
+});
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
 export default Restaurant;
