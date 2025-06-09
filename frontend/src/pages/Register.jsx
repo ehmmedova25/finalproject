@@ -1,59 +1,34 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../features/auth/authSlice';
-import { useNavigate } from 'react-router';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function Register() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(registerUser(formData)).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        navigate('/');
-      }
-    });
+    try {
+      const res = await axios.post('/api/auth/register', form);
+      toast.success('Qeydiyyat uğurla tamamlandı!');
+      console.log(res.data);
+    } catch (error) {
+      const msg = error.response?.data?.message || 'Xəta baş verdi';
+      toast.error(msg);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded-xl shadow">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Qeydiyyat</h2>
-      {error && <p className="text-red-600">{error}</p>}
+    <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">Qeydiyyat</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Adınız"
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Şifrə"
-          onChange={handleChange}
-          className="w-full p-2 border rounded"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          {loading ? 'Yüklənir...' : 'Qeydiyyatdan keç'}
-        </button>
+        <input type="text" name="name" placeholder="Ad" className="border p-2 w-full rounded" onChange={handleChange} />
+        <input type="email" name="email" placeholder="Email" className="border p-2 w-full rounded" onChange={handleChange} />
+        <input type="password" name="password" placeholder="Şifrə" className="border p-2 w-full rounded" onChange={handleChange} />
+        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded">Qeydiyyat</button>
       </form>
     </div>
   );
