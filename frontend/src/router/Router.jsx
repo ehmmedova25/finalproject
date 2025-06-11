@@ -1,25 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
-import Layout from "../layout/Layout";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router';
+import LoginPage from '../pages/loginpage/LoginPage';
+import RegisterPage from '../pages/registerpage/RegisterPage';
+import ProfilePage from '../pages/profilepage/ProfilePage';
+import ProtectedRoute from '../components/ProtectedRoute';
 
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Home from '../pages/home/Home';
-import Restaurants from '../pages/Restaurants';
-
-
-
-export default function app() {
+function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-        </Route>
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-<Route path="/restaurants" element={<Restaurants />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        } />
       </Routes>
     </Router>
   );
 }
+
+export default App;
