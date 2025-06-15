@@ -1,32 +1,48 @@
-import { useEffect, useState } from 'react';
-import axios from '../../api/axios';
-
+import { useEffect, useState } from "react";
+import axios from "../../api/axios";
+import LogoutButton from "../../components/logoutbutton/LogoutButton";
+import "./ProfilePage.module.css";
 const ProfilePage = () => {
-  const [profile, setProfile] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get('/user/profile');
-        setProfile(res.data);
+        const token = localStorage.getItem("accessToken");
+        const res = await axios.get("/user/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(res.data);
+        setLoading(false);
       } catch (err) {
-        console.error(err);
+        console.error("Profil məlumatları alınarkən xəta:", err.message);
+        setLoading(false);
       }
     };
 
     fetchProfile();
   }, []);
 
+  if (loading) return <div className="profile-loading">Məlumatlar yüklənir...</div>;
+
   return (
-    <div>
-      <h2>Profil</h2>
-      {profile ? (
-        <div>
-          <p>Ad: {profile.name}</p>
-          <p>Email: {profile.email}</p>
+    <div className="profile-container">
+      <h2>👤 İstifadəçi Profili</h2>
+      {user ? (
+        <div className="profile-card">
+          <p><span>Ad:</span> {user.name}</p>
+          <p><span>Email:</span> {user.email}</p>
+          <p><span>Qeydiyyat tarixi:</span> {new Date(user.createdAt).toLocaleDateString()}</p>
+
+          <div className="logout-wrapper">
+            <LogoutButton />
+          </div>
         </div>
       ) : (
-        <p>Yüklənir...</p>
+        <p className="profile-error">Profil tapılmadı!</p>
       )}
     </div>
   );

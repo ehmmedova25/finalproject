@@ -1,36 +1,32 @@
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-
-const generateAccessToken = (userId) => jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '15m' });
-const generateRefreshToken = (userId) => jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+import crypto from 'crypto';
+import { sendVerificationEmail } from '../utils/sendVerificationEmail.js'; 
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
+
   try {
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ message: 'Email artıq qeydiyyatdan keçib.' });
 
-    const user = new User({ name, email, password });
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+
+    const user = new User({ name, email, password, verificationToken });
     await user.save();
 
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
-
-    res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+    await sendVerificationEmail(user.email, verificationToken); 
 
     res.status(201).json({
-      user: { id: user._id, name: user.name, email: user.email },
-      accessToken
+      message: 'Qeydiyyat uğurludur. Zəhmət olmasa emailinizi yoxlayın.'
     });
   } catch (err) {
     console.error('Register error:', err.message);
     res.status(500).json({ message: err.message });
   }
 };
+
+
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;

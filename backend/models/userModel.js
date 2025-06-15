@@ -1,13 +1,17 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const userSchema = new mongoose.Schema({
+
+ const userSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 2 },
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true, minlength: 6 },
   provider: { type: String, enum: ['local', 'google'], default: 'local' },
+  isVerified: { type: Boolean, default: false },
+  verifyToken: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
+
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
