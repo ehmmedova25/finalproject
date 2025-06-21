@@ -1,35 +1,27 @@
-import { Link, useNavigate } from 'react-router';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../features/auth/authSlice';
+import { logout } from '../redux/reducers/authSlice.js';
 
-export default function Navbar() {
-  const { user } = useSelector((state) => state.auth);
+const Navbar = () => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
   };
 
   return (
-    <nav className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center">
-      <Link to="/" className="text-xl font-bold">🍽 HybridFood</Link>
-<div className="space-x-4">
-  <Link to="/restaurants" className="hover:underline">Restoranlar</Link>
-  {user ? (
-    <>
-      <span>Salam, {user.name} 👋</span>
-      <button onClick={handleLogout} className="bg-red-500 px-3 py-1 rounded">Çıxış</button>
-    </>
-  ) : (
-    <>
-      <Link to="/login" className="hover:underline">Daxil ol</Link>
-      <Link to="/register" className="hover:underline">Qeydiyyat</Link>
-    </>
-  )}
-</div>
-
+    <nav style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
+      <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
+      {!isAuthenticated && <Link to="/login" style={{ marginRight: '10px' }}>Login</Link>}
+      {!isAuthenticated && <Link to="/register" style={{ marginRight: '10px' }}>Register</Link>}
+      {isAuthenticated && <Link to="/profile" style={{ marginRight: '10px' }}>Profile</Link>}
+      <Link to="/forgot-password" style={{ marginRight: '10px' }}>Forgot Password</Link>
+      {isAuthenticated && <button onClick={handleLogout}>Logout</button>}
     </nav>
   );
-}
+};
+
+export default Navbar;
+
