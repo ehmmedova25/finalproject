@@ -180,6 +180,8 @@ export const resetPassword = async (req, res) => {
 };
 
 
+
+
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const googleLogin = async (req, res) => {
@@ -192,20 +194,20 @@ export const googleLogin = async (req, res) => {
     });
 
     const payload = ticket.getPayload();
-    const { email, given_name, family_name, sub } = payload;
+    const { sub: googleId, email, name, picture } = payload;
 
     let user = await User.findOne({ email });
 
     if (!user) {
-      user = new User({
-        firstName: given_name,
-        lastName: family_name,
+      user = await User.create({
+        firstName: name,
+        lastName: '', // optional
+        username: email.split('@')[0], // or generate unique
         email,
-        username: sub,
+        password: googleId, // random string as password
         isVerified: true,
-        password: sub, 
+        role: 'user',
       });
-      await user.save();
     }
 
     const jwtToken = jwt.sign(
@@ -222,8 +224,8 @@ export const googleLogin = async (req, res) => {
     );
 
     res.status(200).json({ token: jwtToken });
-  } catch (err) {
-    console.error(err);
-    res.status(401).json({ message: 'Google login xətası' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Google ilə daxil olmaq uğursuz oldu.' });
   }
 };
