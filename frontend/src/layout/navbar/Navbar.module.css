@@ -1,197 +1,235 @@
-.header {
-  background-color: #f5f1eb;
-  padding: 2rem 0 1rem;
-  font-family: "Georgia", serif;
+.wrapper {
+  width: 100%;
+  background: #fff;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2rem;
+  width: 100%;
   position: relative;
-}
-
-.socialIcons {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.socialLink {
-  color: #8b7355;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.socialLink:hover {
-  color: #5d4e37;
-}
-
-.logoSection {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
 }
 
 .logoContainer {
-  position: relative;
-  display: inline-block;
-}
-
-.illustration {
-  width: 400px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.brandText {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 2;
+  padding: 20px 0 10px;
 }
 
-.tagline {
-  font-size: 0.75rem;
+.logoTop {
+  font-size: 14px;
+  font-style: italic;
+  color: #555;
+}
+
+.logoMain {
+  font-size: 36px;
+  font-weight: 300;
   letter-spacing: 2px;
-  color: #8b7355;
-  margin: 0 0 0.5rem 0;
-  font-weight: 400;
-  text-transform: uppercase;
-}
-
-.brandName {
-  font-size: 4rem;
-  font-family: "Brush Script MT", cursive;
-  color: #2c2c2c;
-  margin: 0;
-  font-weight: 400;
-  line-height: 1;
-}
-
-.rightIcons {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.iconButton {
-  background: none;
-  border: none;
-  color: #8b7355;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  transition: color 0.3s ease;
-}
-
-.iconButton:hover {
-  color: #5d4e37;
-}
-
-.navigation {
-  margin-top: 2rem;
-  border-top: 1px solid #e0d5c7;
-  padding-top: 1rem;
-}
-
-.navList {
+  color: #222;
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+.burger {
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+}
+
+.iconRow {
+  display: none;
+}
+
+.navRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+}
+
+.leftIcons,
+.rightIcons {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 18px;
+  color: #9c8181;
+  position: relative;
+}
+
+.leftIcons > *,
+.rightIcons > * {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.leftIcons > *:hover,
+.rightIcons > *:hover {
+  color: #ff6600;
+  transform: scale(1.1);
+}
+
+.navLinks {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
   list-style: none;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 500;
   margin: 0;
   padding: 0;
 }
 
-.navLink {
-  color: #8b7355;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: color 0.3s ease;
+.navLinks li {
+  list-style: none;
+}
+
+.navLinks a {
   position: relative;
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 0;
 }
 
-.navLink:hover {
-  color: #5d4e37;
-}
-
-.navLink::after {
-  content: "";
+.navLinks a::after {
+  content: '';
   position: absolute;
-  bottom: -4px;
   left: 0;
+  bottom: 0;
   width: 0;
   height: 2px;
-  background-color: #5d4e37;
-  transition: width 0.3s ease;
+  background-color: #ff6600;
+  transition: width 0.3s ease-in-out;
 }
 
-.navLink:hover::after {
+.navLinks a:hover::after {
   width: 100%;
 }
 
-/* Responsive Design */
+.userMenuWrapper {
+  position: relative;
+}
+
+.userIcon {
+  font-size: 18px;
+  color: #9c8181;
+  transition: all 0.2s ease;
+}
+
+.userIcon:hover {
+  color: #ff6600;
+  transform: scale(1.1);
+}
+
+.userDropdown {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  background: white;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 5px;
+  min-width: 120px;
+}
+
+.userMenuWrapper:hover .userDropdown {
+  display: flex;
+}
+
+.userDropdown a,
+.userDropdown button {
+  font-size: 14px;
+  color: #333;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.userDropdown a:hover,
+.userDropdown button:hover {
+  color: #ff6600;
+}
+
+
+
+
 @media (max-width: 768px) {
-  .container {
+  .burger {
+    display: inline-flex;
+  }
+
+  .iconRow {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    font-size: 18px;
+    color: #555;
+  }
+
+  .iconRow > * {
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .iconRow > *:hover {
+    color: #ff6600;
+    transform: scale(1.1);
+  }
+
+  .navRow {
     flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    border-top: none;
   }
 
-  .logoSection {
-    position: static;
-    transform: none;
-    order: -1;
+  .showMenu {
+    height: auto;
+    padding: 10px 0;
+    border-top: 1px solid #e5e5e5;
   }
 
-  .illustration {
-    width: 300px;
-  }
-
-  .brandName {
-    font-size: 3rem;
-  }
-
-  .navList {
-    flex-wrap: wrap;
-    gap: 1.5rem;
-  }
-
-  .socialIcons {
-    order: 1;
+  .navLinks {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 10px 20px;
   }
 
   .rightIcons {
-    order: 2;
-  }
-}
-
-@media (max-width: 480px) {
-  .illustration {
-    width: 250px;
+    justify-content: flex-start;
+    padding-left: 20px;
+    width: 100%;
+    margin-top: 10px;
   }
 
-  .brandName {
-    font-size: 2.5rem;
+  .leftIcons {
+    display: none;
   }
 
-  .navList {
-    gap: 1rem;
-  }
-
-  .navLink {
-    font-size: 0.8rem;
+  .userDropdown {
+    right: 10px;
+    top: 35px;
+    min-width: 140px;
   }
 }

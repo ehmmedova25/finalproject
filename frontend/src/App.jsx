@@ -8,7 +8,7 @@ function App() {
     <>
       <Router />
       <ToastContainer position="top-right" autoClose={3000} />
-      
+
     </>
   );
 }
