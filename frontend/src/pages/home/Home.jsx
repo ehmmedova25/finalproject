@@ -1,11 +1,10 @@
-// src/pages/Home.jsx
-import React from "react";
+import React from 'react';
 
 const Home = () => {
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>🏠 Ana Səhifə</h1>
-      <p>FoodShare platformasına xoş gəlmisiniz! 👋</p>
+    <div>
+      <h1>Əsas Səhifə (Home)</h1>
+      <p>Login uğurlu olduqdan sonra bu səhifəyə yönləndirilirsiniz.</p>
     </div>
   );
 };

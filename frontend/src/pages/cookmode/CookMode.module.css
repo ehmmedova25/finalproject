@@ -1,0 +1,64 @@
+.wrapper {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.mainImage {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.stepCard {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.stepText {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.stepVideo {
+  width: 100%;
+  max-height: 360px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.timer {
+  font-weight: bold;
+  margin-top: 10px;
+  color: #e67e22;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+button {
+  padding: 10px 16px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}

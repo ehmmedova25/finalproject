@@ -8,7 +8,9 @@ import VerifyEmail from '../pages/verifyemail/VerifyEmail';
 import ForgotPassword from '../pages/forgotpassword/ForgotPassword';
 import ResetPassword from '../pages/resetpassword/ResetPassword';
 import Home from '../pages/home/Home';
-
+import AddRecipe from '../pages/addrecipe/AddRecipe';
+import Recipes from '../pages/recipes/Recipes';
+import CookMode from "../pages/cookmode/CookMode"; 
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -21,6 +23,9 @@ const AppRouter = () => {
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password/:token" element={<ResetPassword />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="/add-recipe" element={<AddRecipe />} />
+          <Route path='/recipes' element={<Recipes/>}/>
+          <Route path="/cook-mode/:id" element={<CookMode />} />
         </Route>
       </Routes>
     </BrowserRouter>

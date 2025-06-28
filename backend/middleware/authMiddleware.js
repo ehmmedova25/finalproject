@@ -2,12 +2,15 @@ import jwt from 'jsonwebtoken';
 
 export const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith('Bearer ')) return res.status(401).json({ message: 'Token yoxdur.' });
+  if (!authHeader?.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Token yoxdur.' });
+  }
 
   const token = authHeader.split(' ')[1];
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.userId;
+    req.user = decoded; // ✔ bütün user məlumatları daxil olacaq: id, username, email və s.
     next();
   } catch {
     return res.status(403).json({ message: 'Token etibarsızdır.' });

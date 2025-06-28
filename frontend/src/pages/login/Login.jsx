@@ -11,7 +11,8 @@ import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();const handleGoogleLogin = async (credentialResponse) => {
+  const dispatch = useDispatch();
+  const handleGoogleLogin = async (credentialResponse) => {
   try {
     const res = await axios.post('http://localhost:5000/api/google-login', {
       token: credentialResponse.credential,
@@ -21,7 +22,7 @@ const Login = () => {
     dispatch(setUser({ user: decodedUser, token }));
     localStorage.setItem('token', token);
     toast.success('Google ilə daxil oldunuz!');
-    navigate('/dashboard');
+    navigate('/home');
   } catch (err) {
     toast.error('Google login uğursuz oldu');
   }
