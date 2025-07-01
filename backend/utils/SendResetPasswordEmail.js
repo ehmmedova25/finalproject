@@ -10,28 +10,21 @@ const sendResetPasswordEmail = async (email, token) => {
       },
     });
 
-    const resetUrl = `http://localhost:5173/reset-password/${token}`;
+    const resetUrl = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
     const mailOptions = {
       from: `FoodShare <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Şifrə Sıfırlama Linki',
+      subject: 'Şifrə Sıfırlama',
       html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-          <h2>Salam!</h2>
-          <p>Şifrənizi sıfırlamaq üçün aşağıdakı linkə klik edin:</p>
-          <a href="${resetUrl}" target="_blank" style="display:inline-block; padding:10px 20px; background-color:#dc3545; color:#fff; text-decoration:none; border-radius:5px;">
-            Şifrəni Sıfırla
-          </a>
-          <p>Əgər bu istəyi siz etməmisinizsə, emaili nəzərə almayın.</p>
-        </div>
+        <h2>Şifrəni sıfırlamaq üçün link:</h2>
+        <a href="${resetUrl}" target="_blank">Şifrəni Sıfırla</a>
       `,
     };
 
     await transporter.sendMail(mailOptions);
-    console.log(`✅ Şifrə sıfırlama emaili göndərildi: ${email}`);
   } catch (error) {
-    console.error('❌ Şifrə sıfırlama emaili göndərilərkən xəta:', error);
+    console.error('Reset email error:', error);
     throw new Error('Email göndərilə bilmədi');
   }
 };

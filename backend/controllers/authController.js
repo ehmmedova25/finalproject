@@ -28,9 +28,6 @@ export const registerUser = async (req, res) => {
     if (existingUser)
       return res.status(400).json({ message: 'Email və ya istifadəçi adı artıq mövcuddur.' });
 
-    const verificationToken = crypto.randomBytes(32).toString('hex');
-    const verificationTokenExpires = new Date(Date.now() + 3600000);
-
     const user = new User({
       firstName,
       lastName,
@@ -38,14 +35,12 @@ export const registerUser = async (req, res) => {
       email,
       password,
       role,
-      verificationToken,
-      verificationTokenExpires,
+      isVerified: false, // əlavə olaraq
     });
 
     await user.save();
-    await sendVerificationEmail(user.email, verificationToken);
 
-    res.status(201).json({ message: 'Qeydiyyat uğurludur. Zəhmət olmasa emailinizi təsdiqləyin.' });
+    res.status(201).json({ message: 'Qeydiyyat uğurludur. Zəhmət olmasa daxil olun.' });
   } catch (err) {
     res.status(500).json({ message: 'Server xətası', error: err.message });
   }
@@ -53,7 +48,6 @@ export const registerUser = async (req, res) => {
 
 export const verifyUser = async (req, res) => {
   const { token } = req.params;
-  console.log("Gələn token:", token);
 
   try {
     const user = await User.findOne({
@@ -61,10 +55,8 @@ export const verifyUser = async (req, res) => {
       verificationTokenExpires: { $gt: Date.now() },
     });
 
-    console.log("Tapılan user:", user);
-
     if (!user) {
-      return res.status(400).json({ message: 'Token etibarsız və ya vaxtı keçmişdir.' });
+      return res.status(400).json({ message: 'Token etibarsız və ya vaxtı keçib.' });
     }
 
     user.isVerified = true;
@@ -72,12 +64,12 @@ export const verifyUser = async (req, res) => {
     user.verificationTokenExpires = undefined;
     await user.save();
 
-    res.redirect('http://localhost:5173/home');
+    return res.status(200).json({ message: 'Email təsdiqləndi!' }); // 🟢 redirect yox, JSON cavabı
   } catch (error) {
-    console.error("Verify error:", error);
     res.status(500).json({ message: 'Server xətası', error: error.message });
   }
 };
+
 
 export const loginUser = async (req, res) => {
   const schema = Joi.object({
@@ -98,7 +90,17 @@ export const loginUser = async (req, res) => {
     if (!isMatch) return res.status(400).json({ message: 'Şifrə yalnışdır' });
 
     if (!user.isVerified) {
-      return res.status(403).json({ message: 'Zəhmət olmasa emailinizi təsdiqləyin' });
+      // Token yaradıb DB-də saxla
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+      user.verificationToken = verificationToken;
+      user.verificationTokenExpires = new Date(Date.now() + 3600000); // 1 saatlıq
+
+      await user.save();
+
+      // Email göndər
+      await sendVerificationEmail(user.email, verificationToken);
+
+      return res.status(403).json({ message: 'Zəhmət olmasa emailinizi təsdiqləyin. Təsdiqləmə linki göndərildi.' });
     }
 
     const token = jwt.sign(

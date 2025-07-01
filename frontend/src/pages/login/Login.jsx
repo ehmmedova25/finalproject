@@ -5,7 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/reducers/authSlice';
+import { setUser } from "../../redux/reducers/authSlice";
+
 import { jwtDecode } from 'jwt-decode'; 
 import { GoogleLogin } from '@react-oauth/google';
 
@@ -22,7 +23,7 @@ const Login = () => {
     dispatch(setUser({ user: decodedUser, token }));
     localStorage.setItem('token', token);
     toast.success('Google ilə daxil oldunuz!');
-    navigate('/home');
+    navigate('/');
   } catch (err) {
     toast.error('Google login uğursuz oldu');
   }
@@ -47,7 +48,7 @@ const Login = () => {
       dispatch(setUser({ user: decodedUser, token }));
       localStorage.setItem('token', token);
       toast.success('Uğurla daxil oldunuz!');
-      navigate('/home');
+      navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Xəta baş verdi');
     } finally {

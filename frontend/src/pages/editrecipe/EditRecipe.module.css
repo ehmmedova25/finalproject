@@ -1,0 +1,23 @@
+.wrapper {
+  padding: 30px;
+}
+h2 {
+  text-align: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.inline {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.submit {
+  background: green;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}

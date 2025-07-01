@@ -11,6 +11,8 @@ import Home from '../pages/home/Home';
 import AddRecipe from '../pages/addrecipe/AddRecipe';
 import Recipes from '../pages/recipes/Recipes';
 import CookMode from "../pages/cookmode/CookMode"; 
+import MyRecipes from '../pages/myrecipes/MyRecipes';
+import EditRecipe from '../pages/editrecipe/EditRecipe';
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -19,13 +21,16 @@ const AppRouter = () => {
           <Route index element={<Home/>} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
-          <Route path="verify/:token" element={<VerifyEmail />} />
+          <Route path="/verify/:token" element={<VerifyEmail />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password/:token" element={<ResetPassword />} />
           <Route path="profile" element={<Profile />} />
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path='/recipes' element={<Recipes/>}/>
           <Route path="/cook-mode/:id" element={<CookMode />} />
+          <Route path="/user/recipes" element={<MyRecipes />} />
+          <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

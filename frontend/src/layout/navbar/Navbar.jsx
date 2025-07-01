@@ -121,10 +121,12 @@ const Navbar = () => {
               <Link to="/recipes">Recipes</Link>
             </li>
             <li>
-              <Link to="/forum">Forum</Link>
+<Link to="/add-recipe">add recipe</Link>
+
             </li>
             <li>
-              <Link to="/shop">Shop</Link>
+<Link to="/user/recipes">My recipes</Link>
+
             </li>
             <li>
               <Link to="/about">About</Link>

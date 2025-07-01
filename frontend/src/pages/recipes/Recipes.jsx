@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecipes } from "../../redux/reducers/recipeSlice";
 import styles from "./Recipes.module.css";
+import { Link } from "react-router-dom";
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState([]);
+  const dispatch = useDispatch();
+  const { items: recipes, loading, error } = useSelector((state) => state.recipes);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-const res = await axios.get("http://localhost:5000/api/recipes");
-        setRecipes(res.data);
-      } catch (err) {
-        console.error("Reseptlər yüklənmədi", err);
-      }
-    };
-    fetchRecipes();
-  }, []);
+    dispatch(fetchRecipes());
+  }, [dispatch]);
+
+  if (loading) return <p>Yüklənir...</p>;
+  if (error) return <p>Xəta: {error}</p>;
 
   return (
     <div className={styles.wrapper}>
