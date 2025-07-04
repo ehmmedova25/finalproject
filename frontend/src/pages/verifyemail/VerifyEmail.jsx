@@ -4,15 +4,15 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const VerifyEmail = () => {
-  const { token } = useParams(); // ⬅️ BURADA token alınmalıdır
+  const { token } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verify = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/verify/${token}`);
-        toast.success(res.data.message); // “Email təsdiqləndi!”
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/verify/${token}`);
+        toast.success(res.data.message);
         navigate('/home');
       } catch (err) {
         toast.error('Təsdiqləmə uğursuz oldu');

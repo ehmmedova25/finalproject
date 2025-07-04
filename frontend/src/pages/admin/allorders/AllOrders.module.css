@@ -1,0 +1,33 @@
+.wrapper {
+  padding: 2rem;
+}
+
+.card {
+  background: #f8f8f8;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.products {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: white;
+}
+
+.product img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}

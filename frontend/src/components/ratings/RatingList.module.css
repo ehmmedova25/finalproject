@@ -1,0 +1,19 @@
+/* RatingList.module.css */
+.reviewList {
+  margin-top: 30px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+.reviewItem {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.stars {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}

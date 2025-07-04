@@ -1,0 +1,19 @@
+/* src/components/cookmode/StepCard.module.css */
+.card {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.video {
+  width: 100%;
+  max-height: 300px;
+  margin-top: 10px;
+}
+
+.timer {
+  font-weight: bold;
+  margin-top: 5px;
+}

@@ -1,10 +1,8 @@
-// frontend/src/pages/myrecipes/MyRecipes.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyRecipes } from "../../redux/reducers/recipeSlice";
+import { fetchMyRecipes, deleteRecipe } from "../../redux/reducers/recipeSlice";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./MyRecipes.module.css";
-import axios from "axios";
 import { toast } from "react-toastify";
 
 const MyRecipes = () => {
@@ -15,32 +13,19 @@ const MyRecipes = () => {
   useEffect(() => {
     dispatch(fetchMyRecipes());
   }, [dispatch]);
-const handleDelete = async (id) => {
-  const confirm = window.confirm("Bu resepti silmək istədiyinizə əminsiniz?");
-  if (!confirm) return;
 
-  const token = localStorage.getItem("token");
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Bu resepti silmək istədiyinizə əminsiniz?");
+    if (!confirmDelete) return;
 
-  try {
-    await axios({
-      method: "delete",
-      url: `http://localhost:5000/api/recipes/${id}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    toast.success("Resept silindi");
-    dispatch(fetchMyRecipes());
-  } catch (err) {
-    console.error("Silinərkən xəta:", err.message);
-    if (err.response?.data?.message) {
-      toast.error(err.response.data.message);
-    } else {
+    try {
+      await dispatch(deleteRecipe(id)).unwrap();
+      toast.success("Resept silindi");
+    } catch (err) {
+      console.error("Silinərkən xəta:", err.message);
       toast.error("Silinərkən xəta baş verdi");
     }
-  }
-};
+  };
 
   if (loading) return <p>Yüklənir...</p>;
   if (error) return <p>Xəta: {error}</p>;

@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema({
   verificationTokenExpires: Date,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
+  toCookList: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
 });
 
 userSchema.pre('save', async function (next) {
@@ -29,4 +31,3 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 const User = mongoose.model('User', userSchema);
 export default User;
-

@@ -1,31 +1,35 @@
-import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axiosInstance from "../../api/axiosInstance";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
 
   const initialValues = {
-    password: '',
-    confirmPassword: '',
+    password: "",
+    confirmPassword: "",
   };
 
   const validationSchema = Yup.object({
-    password: Yup.string().min(6).required('Yeni şifrə tələb olunur'),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'Şifrələr uyğun deyil').required('Təkrar şifrə tələb olunur'),
+    password: Yup.string()
+      .min(6, "Minimum 6 simvol olmalıdır")
+      .required("Şifrə tələb olunur"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Şifrələr uyğun deyil")
+      .required("Təsdiq şifrə tələb olunur"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const res = await axios.post(`http://localhost:5000/api/reset-password/${token}`, values);
+      const res = await axiosInstance.post(`/auth/reset-password/${token}`, values);
       toast.success(res.data.message);
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Xəta baş verdi');
+      toast.error(err.response?.data?.message || "Xəta baş verdi");
     } finally {
       setSubmitting(false);
     }
@@ -33,7 +37,7 @@ const ResetPassword = () => {
 
   return (
     <div className="reset-password-container">
-      <h2>Yeni Şifrə</h2>
+      <h2>Yeni şifrə təyin et</h2>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
@@ -43,7 +47,7 @@ const ResetPassword = () => {
               <ErrorMessage name="password" component="div" />
             </div>
             <div>
-              <label>Təkrar Şifrə:</label>
+              <label>Şifrəni Təsdiqlə:</label>
               <Field type="password" name="confirmPassword" />
               <ErrorMessage name="confirmPassword" component="div" />
             </div>

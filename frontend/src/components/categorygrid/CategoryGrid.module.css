@@ -1,0 +1,30 @@
+/* CategoryGrid.module.css */
+.wrapper {
+  text-align: center;
+  padding: 2rem;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  border: 2px solid #fff;
+}
+
+.image:hover {
+  transform: scale(1.05);
+}

@@ -1,34 +1,33 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { setUser } from "../../redux/reducers/authSlice";
-
-import { jwtDecode } from 'jwt-decode'; 
+import { setUser } from '../../redux/reducers/authSlice';
 import { GoogleLogin } from '@react-oauth/google';
+import axiosInstance from '../../api/axiosInstance';
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const handleGoogleLogin = async (credentialResponse) => {
+
+ const handleGoogleLogin = async (credentialResponse) => {
   try {
-    const res = await axios.post('http://localhost:5000/api/google-login', {
+    const res = await axiosInstance.post('/auth/google-login', {
       token: credentialResponse.credential,
     });
-    const { token } = res.data;
-    const decodedUser = jwtDecode(token);
-    dispatch(setUser({ user: decodedUser, token }));
-    localStorage.setItem('token', token);
+
+    const { token, user } = res.data;
+
+    dispatch(setUser({ token, user }));
+
     toast.success('Google ilə daxil oldunuz!');
     navigate('/');
   } catch (err) {
     toast.error('Google login uğursuz oldu');
   }
 };
-
 
   const initialValues = {
     email: '',
@@ -42,11 +41,8 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/login', values);
-      const { token } = res.data;
-      const decodedUser = jwtDecode(token);
-      dispatch(setUser({ user: decodedUser, token }));
-      localStorage.setItem('token', token);
+      const res = await axiosInstance.post('/auth/login', values);
+      dispatch(setUser(res.data.user));
       toast.success('Uğurla daxil oldunuz!');
       navigate('/');
     } catch (err) {
@@ -59,11 +55,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <h2>Daxil ol</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
             <div>
@@ -80,18 +72,13 @@ const Login = () => {
           </Form>
         )}
       </Formik>
-<GoogleLogin
-  onSuccess={handleGoogleLogin}
-  onError={() => toast.error('Google login uğursuz oldu')}
-/>
+
+      <GoogleLogin
+        onSuccess={handleGoogleLogin}
+        onError={() => toast.error('Google login uğursuz oldu')}
+      />
     </div>
   );
 };
 
-
-
-
-
-
 export default Login;
-

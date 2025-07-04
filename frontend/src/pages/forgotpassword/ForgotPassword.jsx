@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import { toast } from 'react-toastify';
 
 const ForgotPassword = () => {
@@ -13,7 +13,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/forgot-password', values);
+      const res = await axiosInstance.post('/auth/forgot-password', values);
       toast.success(res.data.message);
     } catch (err) {
       toast.error(err.response?.data?.message || 'Xəta baş verdi');
@@ -42,6 +42,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-
-
-

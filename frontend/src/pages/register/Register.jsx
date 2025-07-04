@@ -1,12 +1,9 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import styles from "./Register.module.css"
-
 
 const Register = () => {
   const navigate = useNavigate();
@@ -35,11 +32,11 @@ const Register = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/register', values);
-      toast.success(response.data.message);
+      const res = await axiosInstance.post('/auth/register', values);
+      toast.success(res.data.message);
       navigate('/login');
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Xəta baş verdi');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Xəta baş verdi');
     } finally {
       setSubmitting(false);
     }
@@ -48,49 +45,15 @@ const Register = () => {
   return (
     <div className="register-container">
       <h2>Qeydiyyat</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form>
-            <div>
-              <label>Ad:</label>
-              <Field type="text" name="firstName" />
-              <ErrorMessage name="firstName" component="div" />
-            </div>
-
-            <div>
-              <label>Soyad:</label>
-              <Field type="text" name="lastName" />
-              <ErrorMessage name="lastName" component="div" />
-            </div>
-
-            <div>
-              <label>İstifadəçi adı:</label>
-              <Field type="text" name="username" />
-              <ErrorMessage name="username" component="div" />
-            </div>
-
-            <div>
-              <label>Email:</label>
-              <Field type="email" name="email" />
-              <ErrorMessage name="email" component="div" />
-            </div>
-
-            <div>
-              <label>Şifrə:</label>
-              <Field type="password" name="password" />
-              <ErrorMessage name="password" component="div" />
-            </div>
-
-            <div>
-              <label>Təkrar şifrə:</label>
-              <Field type="password" name="confirmPassword" />
-              <ErrorMessage name="confirmPassword" component="div" />
-            </div>
-
+            <div><label>Ad:</label><Field type="text" name="firstName" /><ErrorMessage name="firstName" component="div" /></div>
+            <div><label>Soyad:</label><Field type="text" name="lastName" /><ErrorMessage name="lastName" component="div" /></div>
+            <div><label>İstifadəçi adı:</label><Field type="text" name="username" /><ErrorMessage name="username" component="div" /></div>
+            <div><label>Email:</label><Field type="email" name="email" /><ErrorMessage name="email" component="div" /></div>
+            <div><label>Şifrə:</label><Field type="password" name="password" /><ErrorMessage name="password" component="div" /></div>
+            <div><label>Təkrar şifrə:</label><Field type="password" name="confirmPassword" /><ErrorMessage name="confirmPassword" component="div" /></div>
             <div>
               <label>Rol:</label>
               <Field as="select" name="role">
@@ -99,7 +62,6 @@ const Register = () => {
               </Field>
               <ErrorMessage name="role" component="div" />
             </div>
-
             <button type="submit" disabled={isSubmitting}>Qeydiyyatdan keç</button>
           </Form>
         )}

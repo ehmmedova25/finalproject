@@ -1,13 +1,16 @@
-// frontend/src/pages/editrecipe/EditRecipe.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateRecipe } from "../../redux/reducers/recipeSlice";
+import { toast } from "react-toastify";
 import axios from "axios";
 import styles from "./EditRecipe.module.css";
-import { toast } from "react-toastify";
 
 const EditRecipe = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(true);
   const [recipe, setRecipe] = useState(null);
 
@@ -26,35 +29,26 @@ const EditRecipe = () => {
     fetchRecipe();
   }, [id]);
 
+  const handleStepChange = (index, field, value) => {
+    const updatedSteps = [...recipe.steps];
+    updatedSteps[index][field] = value;
+    setRecipe({ ...recipe, steps: updatedSteps });
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-
     try {
-      await axios.put(
-        `http://localhost:5000/api/recipes/${id}`,
-        {
-          title: recipe.title,
-          ingredients: recipe.ingredients,
-          steps: recipe.steps,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await dispatch(updateRecipe({ id, updatedData: {
+        title: recipe.title,
+        ingredients: recipe.ingredients,
+        steps: recipe.steps
+      }})).unwrap();
+
       toast.success("Resept yeniləndi!");
       navigate("/user/recipes");
     } catch (err) {
       toast.error("Yeniləmə zamanı xəta baş verdi");
     }
-  };
-
-  const handleStepChange = (index, field, value) => {
-    const updatedSteps = [...recipe.steps];
-    updatedSteps[index][field] = value;
-    setRecipe({ ...recipe, steps: updatedSteps });
   };
 
   if (loading) return <p>Yüklənir...</p>;
@@ -98,12 +92,7 @@ const EditRecipe = () => {
             </button>
           </div>
         ))}
-        <button
-          type="button"
-          onClick={() =>
-            setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] })
-          }
-        >
+        <button type="button" onClick={() => setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] })}>
           Tərkib əlavə et
         </button>
 
