@@ -5,9 +5,12 @@ import { useSelector } from "react-redux";
 import axiosInstance from "../../api/axiosInstance";
 import { toast } from "react-toastify";
 import styles from "./CheckoutForm.module.css";
+import { useDispatch } from "react-redux";
+import { setCustomerInfo } from "../../redux/reducers/checkoutSlice";
 
 const CheckoutForm = () => {
   const { items } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const initialValues = {
     name: "",
@@ -21,7 +24,9 @@ const CheckoutForm = () => {
 
   const validationSchema = Yup.object({
     name: Yup.string().required("Ad tələb olunur"),
-    email: Yup.string().email("Etibarlı email daxil edin").required("Email tələb olunur"),
+    email: Yup.string()
+      .email("Etibarlı email daxil edin")
+      .required("Email tələb olunur"),
     address: Yup.string().required("Ünvan tələb olunur"),
     city: Yup.string().required("Şəhər tələb olunur"),
     prefix: Yup.string().required("Prefiks tələb olunur"),
@@ -46,10 +51,10 @@ const CheckoutForm = () => {
         address: values.address,
         city: values.city,
         phone: `${values.prefix}${values.phone}`,
-        deliveryMethod: values.deliveryMethod, 
+        deliveryMethod: values.deliveryMethod,
       };
 
-      console.log("🛒 Sending to payment:", { items, customerInfo });
+      dispatch(setCustomerInfo(customerInfo));
 
       localStorage.setItem("cartItems", JSON.stringify(items));
       localStorage.setItem("customerInfo", JSON.stringify(customerInfo));
@@ -60,13 +65,12 @@ const CheckoutForm = () => {
       });
 
       if (res.data.url) {
-        console.log("✅ Redirecting to Stripe:", res.data.url);
         window.location.href = res.data.url;
       } else {
         throw new Error("Stripe URL alınmadı");
       }
     } catch (error) {
-      console.error("❌ Ödəniş xətası:", error.response?.data || error.message);
+      console.error("Ödəniş xətası:", error.response?.data || error.message);
       toast.error("Ödəniş zamanı xəta baş verdi!");
     } finally {
       setSubmitting(false);
@@ -95,20 +99,48 @@ const CheckoutForm = () => {
         {({ isSubmitting }) => (
           <Form className={styles.form}>
             <label>Ad Soyad *</label>
-            <Field name="name" type="text" placeholder="Adınızı və soyadınızı daxil edin" />
-            <ErrorMessage name="name" component="div" className={styles.error} />
+            <Field
+              name="name"
+              type="text"
+              placeholder="Adınızı və soyadınızı daxil edin"
+            />
+            <ErrorMessage
+              name="name"
+              component="div"
+              className={styles.error}
+            />
 
             <label>Email *</label>
             <Field name="email" type="email" placeholder="email@example.com" />
-            <ErrorMessage name="email" component="div" className={styles.error} />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className={styles.error}
+            />
 
             <label>Ünvan *</label>
-            <Field name="address" type="text" placeholder="Tam ünvanınızı daxil edin" />
-            <ErrorMessage name="address" component="div" className={styles.error} />
+            <Field
+              name="address"
+              type="text"
+              placeholder="Tam ünvanınızı daxil edin"
+            />
+            <ErrorMessage
+              name="address"
+              component="div"
+              className={styles.error}
+            />
 
             <label>Şəhər *</label>
-            <Field name="city" type="text" placeholder="Şəhərinizi daxil edin" />
-            <ErrorMessage name="city" component="div" className={styles.error} />
+            <Field
+              name="city"
+              type="text"
+              placeholder="Şəhərinizi daxil edin"
+            />
+            <ErrorMessage
+              name="city"
+              component="div"
+              className={styles.error}
+            />
 
             <label>Telefon Nömrəsi *</label>
             <div className={styles.phoneGroup}>
@@ -124,14 +156,22 @@ const CheckoutForm = () => {
                 maxLength="9"
               />
             </div>
-            <ErrorMessage name="phone" component="div" className={styles.error} />
+            <ErrorMessage
+              name="phone"
+              component="div"
+              className={styles.error}
+            />
 
             <label>Çatdırılma növü *</label>
             <Field as="select" name="deliveryMethod">
               <option value="delivery">Çatdırılma</option>
               <option value="pickup">Götürmə</option>
             </Field>
-            <ErrorMessage name="deliveryMethod" component="div" className={styles.error} />
+            <ErrorMessage
+              name="deliveryMethod"
+              component="div"
+              className={styles.error}
+            />
 
             <button
               type="submit"

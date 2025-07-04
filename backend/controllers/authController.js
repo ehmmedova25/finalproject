@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import crypto from "crypto";
+import bcrypt from 'bcryptjs'; 
 import Joi from "joi";
 import jwt from "jsonwebtoken";
 import sendVerificationEmail from "../utils/sendVerificationEmail.js";
@@ -7,7 +8,7 @@ import sendResetPasswordEmail from "../utils/sendResetPasswordEmail.js";
 import { OAuth2Client } from "google-auth-library";
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// 🔐 Qeydiyyat
+
 export const registerUser = async (req, res) => {
   const schema = Joi.object({
     firstName: Joi.string().required(),
@@ -16,20 +17,18 @@ export const registerUser = async (req, res) => {
     email: Joi.string().email().required(),
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
-    role: Joi.string().valid("user", "seller"),
   });
 
   const { error } = schema.validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
-  const { firstName, lastName, username, email, password, role } = req.body;
+  const { firstName, lastName, username, email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser)
-      return res
-        .status(400)
-        .json({ message: "Email və ya istifadəçi adı artıq mövcuddur." });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email və ya istifadəçi adı artıq mövcuddur." });
+    }
 
     const user = new User({
       firstName,
@@ -37,20 +36,17 @@ export const registerUser = async (req, res) => {
       username,
       email,
       password,
-      role,
+      role: "user", 
       isVerified: false,
     });
 
     await user.save();
-    res
-      .status(201)
-      .json({ message: "Qeydiyyat uğurludur. Zəhmət olmasa daxil olun." });
+    res.status(201).json({ message: "Qeydiyyat uğurludur. Zəhmət olmasa daxil olun." });
   } catch (err) {
     res.status(500).json({ message: "Server xətası", error: err.message });
   }
 };
 
-// ✉️ Email doğrulama
 export const verifyUser = async (req, res) => {
   const { token } = req.params;
   try {
@@ -133,7 +129,6 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// 🔁 Forgot Password
 export const forgotPassword = async (req, res) => {
   const schema = Joi.object({
     email: Joi.string().email().required(),
@@ -158,7 +153,6 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-// 🔁 Reset Password
 export const resetPassword = async (req, res) => {
   const schema = Joi.object({
     password: Joi.string().min(6).required(),
@@ -191,19 +185,28 @@ export const resetPassword = async (req, res) => {
 };
 export const googleLogin = async (req, res) => {
   const { token } = req.body;
+  
+  console.log("🔍 Google login başladı, token:", token ? "var" : "yox");
+  console.log("🔍 GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "var" : "yox");
 
   try {
+    console.log("🔍 Google token doğrulanır...");
     const ticket = await client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
+    console.log("✅ Google token təsdiqləndi");
     const payload = ticket.getPayload();
     const { sub: googleId, email, name } = payload;
+    
+    console.log("📧 Google istifadəçi məlumatları:", { googleId, email, name });
 
+    console.log("🔍 Database-də istifadəçi axtarılır...");
     let user = await User.findOne({ email });
 
     if (!user) {
+      console.log("🆕 Yeni istifadəçi yaradılır...");
       user = await User.create({
         firstName: name,
         lastName: "",
@@ -213,8 +216,12 @@ export const googleLogin = async (req, res) => {
         isVerified: true,
         role: "user",
       });
+      console.log("✅ Yeni istifadəçi yaradıldı:", user._id);
+    } else {
+      console.log("✅ Mövcud istifadəçi tapıldı:", user._id);
     }
 
+    console.log("🔍 JWT token yaradılır...");
     const jwtToken = jwt.sign(
       {
         id: user._id,
@@ -228,6 +235,8 @@ export const googleLogin = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    console.log("✅ JWT token yaradıldı");
+
     res.status(200).json({
       token: jwtToken,
       user: {
@@ -240,13 +249,13 @@ export const googleLogin = async (req, res) => {
       },
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Google ilə giriş uğursuz oldu", error: error.message });
+   
+    res.status(500).json({ 
+      message: "Google ilə giriş uğursuz oldu", 
+      error: error.message 
+    });
   }
 };
-
-// ❤️ Toggle Favorite
 export const toggleFavorite = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -271,7 +280,6 @@ export const toggleFavorite = async (req, res) => {
   }
 };
 
-// 🍳 Toggle To-Cook
 export const toggleToCook = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -296,7 +304,6 @@ export const toggleToCook = async (req, res) => {
   }
 };
 
-// 📥 Get Favorites
 export const getFavorites = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate("favorites");
@@ -308,7 +315,6 @@ export const getFavorites = async (req, res) => {
   }
 };
 
-// 📥 Get To-Cook List
 export const getToCookList = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).populate("toCookList");

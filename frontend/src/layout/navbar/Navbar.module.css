@@ -1,221 +1,568 @@
+/* Navbar.module.css */
 .wrapper {
-  width: 100%;
   background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
-  position: relative;
-}
-
-.logoContainer {
-  text-align: center;
-  padding: 20px 0 10px;
-}
-
-.logoTop {
-  font-size: 14px;
-  font-style: italic;
-  color: #555;
-}
-
-.logoMain {
-  font-size: 36px;
-  font-weight: 300;
-  letter-spacing: 2px;
-  color: #222;
+  padding: 0 1rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 20px;
-  position: relative;
-}
-
-.burger {
-  font-size: 24px;
-  cursor: pointer;
-  display: none;
-}
-
-.iconRow {
-  display: none;
-}
-
-.navRow {
-  display: flex;
   justify-content: space-between;
+  height: 70px;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.links {
+  display: flex;
   align-items: center;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 10px 0;
+  gap: 2rem;
+}
+
+.links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.links a:hover {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #007bff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.links a:hover::after {
+  width: 80%;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdownButton {
+  background: none;
+  border: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.dropdownButton:hover {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000;
+  animation: slideDown 0.3s ease;
+}
+
+.dropdownMenu a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.dropdownMenu a:last-child {
+  border-bottom: none;
+}
+
+.dropdownMenu a:hover {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+.categoryIcon {
+  font-size: 1.2rem;
+}
+
+/* Icons Section */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.iconButton {
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
   transition: all 0.3s ease;
 }
 
-.leftIcons,
-.rightIcons {
-  width: 20%;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  font-size: 18px;
-  color: #9c8181;
-  position: relative;
-}
-
-.leftIcons > *,
-.rightIcons > * {
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.leftIcons > *:hover,
-.rightIcons > *:hover {
-  color: #ff6600;
+.iconButton:hover {
+  background: #f8f9fa;
+  color: #007bff;
   transform: scale(1.1);
 }
 
-.navLinks {
-  width: 60%;
-  display: flex;
-  justify-content: center;
-  gap: 32px;
-  list-style: none;
-  text-transform: uppercase;
-  font-size: 15px;
-  font-weight: 500;
-  margin: 0;
-  padding: 0;
-}
-
-.navLinks li {
-  list-style: none;
-}
-
-.navLinks a {
+.cartIcon {
   position: relative;
-  text-decoration: none;
-  color: inherit;
-  padding: 4px 0;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #333;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-.navLinks a::after {
-  content: '';
+.cartIcon:hover {
+  background: #f8f9fa;
+  color: #007bff;
+  transform: scale(1.1);
+}
+
+.cartCount {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 2px;
-  background-color: #ff6600;
-  transition: width 0.3s ease-in-out;
+  top: -5px;
+  right: -5px;
+  background: #dc3545;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  animation: pulse 1s infinite;
 }
 
-.navLinks a:hover::after {
-  width: 100%;
-}
-
-.userMenuWrapper {
+/* User Menu */
+.userMenu {
   position: relative;
-  display: inline-block;
-  z-index: 1000;
 }
 
 .userDropdown {
   position: absolute;
-  top: 35px;
+  top: 100%;
   right: 0;
-  background-color: white;
-  border: 1px solid #eee;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  padding: 10px;
-  flex-direction: column;
-  gap: 8px;
-  border-radius: 5px;
-  min-width: 140px;
-  z-index: 9999;
-  display: none;
-  transition: opacity 0.2s ease;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  z-index: 1000;
+  animation: slideDown 0.3s ease;
 }
 
-.userDropdown.show {
+.userDropdown a,
+.userDropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  color: #333;
+  text-decoration: none;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.userDropdown a:last-child,
+.userDropdown button:last-child {
+  border-bottom: none;
+}
+
+.userDropdown a:hover,
+.userDropdown button:hover {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+/* Language Switcher */
+.languageSwitcher {
+  position: relative;
+}
+
+.languageButton {
+  background: none;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
   display: flex;
-  opacity: 1;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  color: #333;
 }
 
+.languageButton:hover {
+  background: #f8f9fa;
+  border-color: #007bff;
+  color: #007bff;
+}
 
-@media (max-width: 768px) {
-  .burger {
-    display: inline-flex;
+.languageDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  z-index: 1000;
+  animation: slideDown 0.3s ease;
+}
+
+.languageDropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #f8f9fa;
+  color: #333;
+}
+
+.languageDropdown button:last-child {
+  border-bottom: none;
+}
+
+.languageDropdown button:hover {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+.languageDropdown button.active {
+  background: #007bff;
+  color: white;
+}
+
+/* Burger Menu */
+.burger {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.burger:hover {
+  background: #f8f9fa;
+  color: #007bff;
+}
+
+/* Rotate Animation */
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* Mobile Styles */
+.mobileIcons {
+  display: none;
+}
+
+.overlay {
+  display: none;
+}
+
+/* Animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-
-  .iconRow {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 15px 0;
-    font-size: 18px;
-    color: #555;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .iconRow > * {
-    cursor: pointer;
-    transition: all 0.2s ease;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
   }
-
-  .iconRow > *:hover {
-    color: #ff6600;
+  50% {
     transform: scale(1.1);
   }
+  100% {
+    transform: scale(1);
+  }
+}
 
-  .navRow {
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    height: 60px;
+    padding: 0 0.5rem;
+  }
+
+  .logo img {
+    height: 40px;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .links {
+    position: fixed;
+    top: 60px;
+    left: -100%;
+    width: 85%;
+    height: calc(100vh - 60px);
+    background: white;
     flex-direction: column;
-    align-items: flex-start;
-    height: 0;
-    overflow: hidden;
-    padding: 0;
-    border-top: none;
+    align-items: stretch;
+    gap: 0;
+    padding: 2rem 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    z-index: 999;
   }
 
   .showMenu {
-    height: auto;
-    padding: 10px 0;
-    border-top: 1px solid #e5e5e5;
+    left: 0;
   }
 
-  .navLinks {
-    flex-direction: column;
-    gap: 16px;
+  .overlay {
+    display: block;
+    position: fixed;
+    top: 60px;
+    left: 0;
     width: 100%;
-    padding: 10px 20px;
+    height: calc(100vh - 60px);
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
   }
 
-  .rightIcons {
-    justify-content: flex-start;
-    padding-left: 20px;
-    width: 100%;
-    margin-top: 10px;
+  .links a {
+    padding: 1rem 2rem;
+    border-radius: 0;
+    border-bottom: 1px solid #f8f9fa;
+    margin: 0;
   }
 
-  .leftIcons {
+  .links a:hover {
+    background: #f8f9fa;
+  }
+
+  .links a::after {
     display: none;
   }
 
-  .userDropdown {
-    right: 10px;
-    top: 35px;
-    min-width: 140px;
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropdownButton {
+    width: 100%;
+    padding: 1rem 2rem;
+    justify-content: space-between;
+    border-bottom: 1px solid #f8f9fa;
+    border-radius: 0;
+    font-size: 1rem;
+  }
+
+  .dropdownMenu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    background: #f8f9fa;
+    animation: none;
+  }
+
+  .dropdownMenu a {
+    padding: 1rem 3rem;
+    background: #f8f9fa;
+  }
+
+  .icons {
+    gap: 1rem;
+  }
+
+  .userMenu,
+  .languageSwitcher {
+    display: none;
+  }
+
+  .mobileIcons {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .mobileIcon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .mobileIcon:hover {
+    background: #f8f9fa;
+  }
+
+  .mobileIcon svg {
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  .mobileIcon span {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .mobileBadge {
+    position: absolute;
+    right: 2rem;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+
+  .mobileUserMenu,
+  .mobileLanguage {
+    width: 100%;
+  }
+
+  .mobileUserDropdown,
+  .mobileLanguageDropdown {
+    background: #f8f9fa;
+    padding-left: 1rem;
+  }
+
+  .mobileUserDropdown a,
+  .mobileUserDropdown button {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .mobileUserDropdown a:hover,
+  .mobileUserDropdown button:hover {
+    background: #e9ecef;
+  }
+
+  .mobileLanguageDropdown button {
+    display: block;
+    width: 100%;
+    padding: 1rem 2rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .mobileLanguageDropdown button:hover {
+    background: #e9ecef;
+  }
+
+  .mobileLanguageDropdown button.active {
+    background: #007bff;
+    color: white;
   }
 }
-.cartCount {
-  position: absolute;
-  top: -6px;
-  right: -10px;
-  background-color: red;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 50%;
-  z-index: 10;
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.25rem;
+  }
+
+  .logo img {
+    height: 35px;
+  }
+
+  .links {
+    width: 90%;
+  }
+
+  .mobileIcon {
+    padding: 0.75rem 1rem;
+  }
+
+  .mobileUserDropdown a,
+  .mobileUserDropdown button,
+  .mobileLanguageDropdown button {
+    padding: 0.75rem 1.5rem;
+  }
 }

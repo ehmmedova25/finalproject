@@ -49,6 +49,18 @@ export const removeFromCart = createAsyncThunk(
   }
 );
 
+export const clearCartBackend = createAsyncThunk(
+  "cart/clearCartBackend",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.delete("/cart/clear");
+      return res.data.message;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Səbət təmizlənmədi");
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -64,9 +76,7 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    const calculateTotalQuantity = (items) => {
-      return items.reduce((total, item) => total + item.quantity, 0);
-    };
+    const calculateTotalQuantity = (items) => items.reduce((total, item) => total + item.quantity, 0);
 
     builder
       .addCase(addToCart.pending, (state) => {
@@ -105,6 +115,11 @@ const cartSlice = createSlice({
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.items = action.payload || [];
         state.totalQuantity = calculateTotalQuantity(state.items);
+      })
+
+      .addCase(clearCartBackend.fulfilled, (state) => {
+        state.items = [];
+        state.totalQuantity = 0;
       });
   },
 });

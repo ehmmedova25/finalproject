@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Recipe from "../models/Recipe.js";
-// 🔵 1. Yeni resept yarat
 export const createRecipe = async (req, res) => {
   try {
     const { title, image, videoUrl, ingredients, steps, category } = req.body;
@@ -15,7 +14,7 @@ export const createRecipe = async (req, res) => {
       ingredients: parsedIngredients,
       steps: parsedSteps,
       createdBy: req.user.id,
-      category, // ✅ burada əlavə et
+      category, 
     });
 
     await newRecipe.save();
@@ -36,7 +35,6 @@ export const getAllRecipes = async (req, res) => {
 
     let filter = {};
 
-    // 🔍 Axtarış varsa
     if (search) {
       filter.title = { $regex: search, $options: "i" };
     }
@@ -48,7 +46,7 @@ export const getAllRecipes = async (req, res) => {
     return res.status(400).json({ message: "Yanlış kateqoriya ID-si" });
   }
 }
-    console.log("🟢 filter:", filter); // Debug üçün
+    console.log("🟢 filter:", filter);
 
     const recipes = await Recipe.find(filter).populate("category", "name");
     res.status(200).json(recipes);
@@ -59,7 +57,6 @@ export const getAllRecipes = async (req, res) => {
 };
 
 
-// 🔵 3. İstifadəçinin öz reseptləri
 export const getMyRecipes = async (req, res) => {
   try {
     const recipes = await Recipe.find({ createdBy: req.user.id });
@@ -69,7 +66,6 @@ export const getMyRecipes = async (req, res) => {
   }
 };
 
-// 🔵 4. Resepti ID ilə gətir (Cook Mode üçün)
 export const getRecipeById = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id)
@@ -84,7 +80,6 @@ export const getRecipeById = async (req, res) => {
   }
 };
 
-// 🔴 5. Resepti sil
 export const deleteRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
@@ -105,7 +100,6 @@ export const deleteRecipe = async (req, res) => {
   }
 };
 
-// 🟡 6. Resepti yenilə
 export const updateRecipe = async (req, res) => {
   try {
     const { title, ingredients, steps } = req.body;
@@ -129,7 +123,6 @@ export const updateRecipe = async (req, res) => {
   }
 };
 
-// ⭐ 7. Reytinq və şərh əlavə et
 export const rateRecipe = async (req, res) => {
   try {
     const { rating, comment } = req.body;
@@ -158,7 +151,6 @@ export const rateRecipe = async (req, res) => {
   }
 };
 
-// 💬 8. Şərhə cavab yaz
 export const replyToRating = async (req, res) => {
   const { recipeId, ratingId } = req.params;
   const { comment } = req.body;
@@ -189,7 +181,6 @@ export const replyToRating = async (req, res) => {
   }
 };
 
-// 👍 9. Şərhə like et
 export const likeRating = async (req, res) => {
   const { recipeId, ratingId } = req.params;
   const userId = req.user.id;
@@ -205,7 +196,6 @@ export const likeRating = async (req, res) => {
     if (alreadyLiked) {
       rating.likes = rating.likes.filter((uid) => uid.toString() !== userId);
     } else {
-      // 🟠 DISLIKE varsa, onu sil
       rating.dislikes = rating.dislikes.filter((uid) => uid.toString() !== userId);
       rating.likes.push(userId);
     }

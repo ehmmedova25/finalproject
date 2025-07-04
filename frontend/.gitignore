@@ -29,7 +29,6 @@ dist-ssr
 # Node modules
 **/node_modules/
 
-# Ignore all env files
 .env
 .env.local
 .env.development
@@ -37,7 +36,6 @@ dist-ssr
 frontend/.env
 backend/.env
 
-# .env faylını ignor edək
 .env
 backend/.env
 .env

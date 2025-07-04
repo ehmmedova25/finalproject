@@ -1,0 +1,156 @@
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #fffaf0 0%, #ffe0e5 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(255, 168, 178, 0.15);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #d16b7b;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(209, 107, 123, 0.1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+label {
+  font-weight: 600;
+  color: #a65168;
+  margin-bottom: 0.3rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ffd1da;
+  background: #fff7f9;
+  transition: border 0.3s;
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #f59fbf;
+  outline: none;
+}
+
+button {
+  background: linear-gradient(to right, #fda4af, #fbcfe8);
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 40px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #742c42;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 20px rgba(253, 164, 175, 0.2);
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(253, 164, 175, 0.3);
+}
+
+.measurementSection,
+.ingredientsSection {
+  background: #fff0f3;
+  border: 1px dashed #ffc2cc;
+  padding: 1.5rem;
+  border-radius: 16px;
+}
+
+.measurementSection h3,
+.ingredientsSection h3 {
+  color: #d76c82;
+  margin-bottom: 1rem;
+}
+
+.weightInputs,
+.portionInputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.weightInputs > div,
+.portionInputs > div {
+  flex: 1;
+}
+
+.totalWeight,
+.totalFromPortions {
+  color: #7e2e40;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.ingredientRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.removeBtn {
+  background: #ffe0e5;
+  color: #a80028;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+.addIngredientBtn {
+  margin-top: 0.5rem;
+  background: #fcd5ce;
+  color: #5a2a2a;
+  border-radius: 10px;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+}
+
+.previewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.previewImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #ffd5da;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 2rem 1rem;
+  }
+
+  .weightInputs,
+  .portionInputs {
+    flex-direction: column;
+  }
+
+  .previewImage {
+    width: 80px;
+    height: 80px;
+  }
+}

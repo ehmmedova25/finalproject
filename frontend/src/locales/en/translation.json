@@ -1,0 +1,13 @@
+{
+  "home": "Home",
+  "recipes": "Recipes",
+  "shop": "Shop",
+  "categories": "Categories",
+  "dashboard": "Dashboard",
+  "login": "Login",
+  "register": "Register",
+  "profile": "My Profile",
+  "logout": "Logout",
+  "cooklist": "To Cook",
+  "cart": "Cart"
+}

@@ -30,7 +30,6 @@ const recipeSchema = new mongoose.Schema({
   videoUrl: { type: String },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
-  // ✅ Yalnız bir dəfə category
   category: { type: mongoose.Schema.Types.ObjectId, ref: "Category", required: false },
 
   ratings: [ratingSchema],

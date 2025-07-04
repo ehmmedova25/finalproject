@@ -1,0 +1,112 @@
+
+.wrapper {
+  padding: 2rem;
+  background: #fffdf8;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+h2 {
+  color: #dd6b20;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.message {
+  background-color: #fef3c7;
+  color: #92400e;
+  padding: 1rem;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.categoryCard {
+  background-color: #fff9ec;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.categoryCard:hover {
+  transform: scale(1.02);
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.categoryImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #facc15;
+}
+
+.editForm input[type="text"],
+.editForm input[type="file"] {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid #fbbf24;
+  border-radius: 6px;
+  background-color: #fff7ed;
+}
+
+.editButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.editButtons button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #f97316;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.editButtons button[type="button"] {
+  background-color: #d97706;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.editBtn,
+.deleteBtn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.editBtn {
+  background-color: #f59e0b;
+}
+
+.deleteBtn {
+  background-color: #e11d48;
+}

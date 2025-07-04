@@ -10,9 +10,10 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "recipes",
-    allowed_formats: ["jpg", "png", "jpeg", "mp4", "mov"],
+    folder: "banners",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
   },
 });
 
 export { cloudinary, storage };
+export default cloudinary;

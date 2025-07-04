@@ -1,0 +1,186 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  background: #fff8f1;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(255, 170, 100, 0.15);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h2 {
+  font-size: 1.8rem;
+  color: #d35400;
+}
+
+.addButton {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.addButton:hover {
+  background-color: #cf711e;
+}
+
+.message {
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.success {
+  background-color: #f0f8e8;
+  color: #2ecc71;
+}
+.error {
+  background-color: #fdecea;
+  color: #e74c3c;
+}
+
+.formContainer {
+  background-color: #fff6e0;
+  border: 1px solid #ffd59e;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+}
+
+.formContainer h3 {
+  margin-bottom: 1rem;
+  color: #e67e22;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+.formGroup label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #6e3c1e;
+}
+.formGroup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ffc285;
+  border-radius: 8px;
+  background-color: #fffaf3;
+}
+
+.previewContainer {
+  margin-top: 1rem;
+  text-align: center;
+}
+.preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid #ffbe76;
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.saveButton {
+  background-color: #f39c12;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.saveButton:hover {
+  background-color: #e67e22;
+}
+.cancelButton {
+  background-color: #eee;
+  color: #333;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cancelButton:hover {
+  background-color: #ddd;
+}
+
+.bannerList h3 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #e67e22;
+}
+
+.bannerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.bannerCard {
+  background-color: #fff3e0;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(255, 150, 50, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.bannerCard:hover {
+  transform: translateY(-4px);
+}
+
+.bannerImageContainer {
+  position: relative;
+}
+.bannerImageContainer img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.bannerTitle {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(230, 126, 34, 0.85);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.bannerInfo {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+.bannerInfo p {
+  margin: 0.4rem 0;
+}
+.bannerInfo a {
+  color: #d35400;
+  text-decoration: underline;
+}
+
+.bannerActions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem 1rem;
+}
+.editButton,
+.deleteButton {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+}

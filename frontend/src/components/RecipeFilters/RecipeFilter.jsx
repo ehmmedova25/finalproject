@@ -6,7 +6,8 @@ const RecipeFilters = ({ search, setSearch, category, setCategory }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/category")
+    axios
+      .get("http://localhost:5000/api/category")
       .then((res) => setCategories(res.data))
       .catch((err) => console.error("Kategoriya yükləmə xətası:", err));
   }, []);
@@ -22,19 +23,17 @@ const RecipeFilters = ({ search, setSearch, category, setCategory }) => {
       />
 
       <select
-  value={category}
-  onChange={(e) => setCategory(e.target.value)}
-  className={styles.select}
->
- <option value="All">Hamısı</option>
-{categories.map((cat) => (
-  <option key={cat._id} value={cat._id}>
-    {cat.name}
-  </option>
-))}
-
-</select>
-
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className={styles.select}
+      >
+        <option value="All">Hamısı</option>
+        {categories.map((cat) => (
+          <option key={cat._id} value={cat._id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };

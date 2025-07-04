@@ -1,0 +1,121 @@
+.wrapper {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(to bottom right, #fff0f4, #ffe5ec);
+  box-shadow: 0 8px 32px rgba(255, 168, 178, 0.15);
+  border-radius: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #4a1c2b;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #c0395f;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+label {
+  font-weight: 600;
+  color: #802941;
+}
+
+input,
+select,
+textarea {
+  padding: 0.7rem 1rem;
+  border: 1px solid #ffc2d1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff8fa;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #ff8fa3;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button[type="submit"] {
+  padding: 0.9rem 1.5rem;
+  background-color: #e63956;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+button[type="submit"]:hover {
+  background-color: #cc2c4b;
+}
+
+button[type="submit"]:disabled {
+  background-color: #ffc9d3;
+  cursor: not-allowed;
+}
+
+.ingredientRow {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.ingredientRow input {
+  flex: 1;
+}
+
+.ingredientRow button {
+  background: transparent;
+  border: none;
+  color: #c0395e;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.form button[type="button"] {
+  background: #ffe0ec;
+  border: none;
+  color: #c0395e;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.form button[type="button"]:hover {
+  background: #ffd1dc;
+}
+
+.previewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.previewImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #fbb6ce;
+  box-shadow: 0 2px 6px rgba(255, 105, 135, 0.15);
+}

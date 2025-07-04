@@ -33,6 +33,14 @@ const Recipes = () => {
     dispatch(toggleToCook(id));
   };
 
+  const LoadingSkeleton = () => (
+    <>
+      {[...Array(8)].map((_, index) => (
+        <div key={index} className={styles.skeleton}></div>
+      ))}
+    </>
+  );
+
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>🍽️ Bütün Reseptlər</h1>
@@ -46,11 +54,17 @@ const Recipes = () => {
 
       <div className={styles.grid}>
         {loading ? (
-          <p>Yüklənir...</p>
+          <div className={styles.loading}>
+            Yüklənir...
+          </div>
         ) : error ? (
-          <p>Xəta: {error}</p>
+          <div className={styles.error}>
+            Xəta: {error}
+          </div>
         ) : recipes.length === 0 ? (
-          <p>Heç bir resept tapılmadı</p>
+          <div className={styles.noResults}>
+            Heç bir resept tapılmadı
+          </div>
         ) : (
           recipes.map((recipe) => (
             <RecipeCard

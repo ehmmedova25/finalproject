@@ -52,16 +52,15 @@ export const fetchSellerOrders = createAsyncThunk(
 const orderSlice = createSlice({
   name: "orders",
   initialState: {
-    orders: [],        
-    myOrders: [],      
-    sellerOrders: [],   
+    orders: [],
+    myOrders: [],
+    sellerOrders: [],
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-
       .addCase(fetchAllOrders.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -76,9 +75,14 @@ const orderSlice = createSlice({
       })
 
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
-        const index = state.orders.findIndex(o => o._id === action.payload._id);
+        const index = state.orders.findIndex((o) => o._id === action.payload._id);
         if (index !== -1) {
           state.orders[index] = action.payload;
+        }
+        
+        const myIndex = state.myOrders.findIndex((o) => o._id === action.payload._id);
+        if (myIndex !== -1) {
+          state.myOrders[myIndex] = action.payload;
         }
       })
 
@@ -95,10 +99,6 @@ const orderSlice = createSlice({
         state.error = action.payload;
       })
 
-  
-
-
-
       .addCase(fetchSellerOrders.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -113,7 +113,6 @@ const orderSlice = createSlice({
       });
   },
 });
-
 
 
 export default orderSlice.reducer;

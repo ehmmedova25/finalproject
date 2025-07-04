@@ -8,7 +8,11 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isVerified: { type: Boolean, default: false },
-  role: { type: String, enum: ['user', 'seller'], default: 'user' },
+  role: {
+    type: String,
+    enum: ['user', 'admin'], 
+    default: 'user',
+  },
   createdAt: { type: Date, default: Date.now },
   verificationToken: String,
   verificationTokenExpires: Date,
@@ -16,6 +20,18 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
   toCookList: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
+  isBlocked: {
+  type: Boolean,
+  default: false
+},
+blockedAt: {
+  type: Date,
+  default: null
+},
+blockedReason: {
+  type: String,
+  default: ''
+}
 });
 
 userSchema.pre('save', async function (next) {

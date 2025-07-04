@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axiosInstance from '../../api/axiosInstance';
 import { toast } from 'react-toastify';
+import styles from './ForgotPassword.module.css'; 
 
 const ForgotPassword = () => {
   const initialValues = { email: '' };
@@ -23,20 +24,24 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-container">
-      <h2>Şifrəni unutmusunuz?</h2>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
-          <Form>
-            <div>
-              <label>Email:</label>
-              <Field type="email" name="email" />
-              <ErrorMessage name="email" component="div" />
-            </div>
-            <button type="submit" disabled={isSubmitting}>Link göndər</button>
-          </Form>
-        )}
-      </Formik>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>🔐 Şifrəni unutmusunuz?</h2>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+          {({ isSubmitting }) => (
+            <Form>
+              <div>
+                <label className={styles.label}>Email:</label>
+                <Field type="email" name="email" className={styles.input} />
+                <ErrorMessage name="email" component="div" className={styles.error} />
+              </div>
+              <button type="submit" disabled={isSubmitting} className={styles.button}>
+                Link göndər
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 };

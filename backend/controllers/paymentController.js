@@ -15,15 +15,16 @@ export const createCheckoutSession = async (req, res) => {
       },
       quantity: item.quantity,
     }));
-const session = await stripe.checkout.sessions.create({
-  payment_method_types: ['card'],
-  line_items,
-  mode: 'payment',
-  success_url: `${process.env.CLIENT_URL}/success`,
-  cancel_url: `${process.env.CLIENT_URL}/cancel`,
-});
 
-    res.json({ url: session.url });
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items,
+      mode: 'payment',
+      success_url: `${process.env.CLIENT_URL}/success`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+    });
+
+    res.json({ url: session.url, id: session.id });
   } catch (error) {
     console.error("Stripe Session Xətası:", error.message);
     res.status(500).json({ message: "Ödəniş xətası: " + error.message });

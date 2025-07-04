@@ -1,21 +1,50 @@
 .wrapper {
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  background: linear-gradient(135deg, #fffaf5 0%, #fff1ec 100%);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(255, 192, 203, 0.1);
 }
 
-.title,
-h2 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+.title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #d17a7a;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 2px 6px rgba(209, 122, 122, 0.15);
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  display: block;
+  margin: 0.75rem auto 0;
+  width: 60px;
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #ffd5c2, #f9a8a8, #fac6c6);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
 }
 
-.empty {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 1.2rem;
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
 }

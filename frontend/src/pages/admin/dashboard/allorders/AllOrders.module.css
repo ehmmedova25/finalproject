@@ -1,0 +1,246 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2rem;
+}
+
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.orderCard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.orderCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.orderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.orderInfo h3 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+  font-size: 1.4rem;
+}
+
+.orderDate {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.statusBadge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statusSelect {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.statusSelect:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.orderContent {
+  padding: 20px;
+}
+
+.customerSection,
+.productsSection,
+.totalSection {
+  margin-bottom: 25px;
+}
+
+.customerSection h4,
+.productsSection h4 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.customerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.customerInfo p,
+.deliveryInfo p {
+  margin: 8px 0;
+  color: #495057;
+  line-height: 1.5;
+}
+
+.customerInfo strong,
+.deliveryInfo strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.deliveryMethod {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.delivery {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.pickup {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.productsList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.productItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.productImage {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.productDetails {
+  flex: 1;
+}
+
+.productDetails h5 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+  font-size: 1rem;
+}
+
+.productPrice {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.totalSection {
+  text-align: right;
+  padding: 15px;
+  background: #e8f5e8;
+  border-radius: 8px;
+  border: 1px solid #c8e6c9;
+}
+
+.totalSection h4 {
+  margin: 0;
+  color: #2e7d32;
+  font-size: 1.3rem;
+}
+
+.totalAmount {
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 20px;
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .orderHeader {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .customerGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .statusContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .productItem {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .productImage {
+    width: 80px;
+    height: 80px;
+  }
+}

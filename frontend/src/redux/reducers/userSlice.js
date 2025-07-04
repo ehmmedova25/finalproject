@@ -1,4 +1,3 @@
-// redux/reducers/userSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../api/axiosInstance";
 

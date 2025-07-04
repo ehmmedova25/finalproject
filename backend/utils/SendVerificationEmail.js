@@ -13,11 +13,11 @@ const sendVerificationEmail = async (email, token) => {
     const verifyLink = `${process.env.CLIENT_URL}/verify/${token}`;
 
     const mailOptions = {
-      from: `FoodShare <${process.env.EMAIL_USER}>`,
+      from: `EasyMeals<${process.env.EMAIL_USER}>`,
       to: email,
-      subject: 'Email Təsdiqləmə - FoodShare',
+      subject: 'Email Təsdiqləmə - EasyMeals',
       html: `
-        <h2>Salam!</h2>
+        <h2>Salam EasyMeals platformasına xoş gəlmişsiniz</h2>
         <p>Emailinizi təsdiqləmək üçün aşağıdakı linkə klikləyin:</p>
         <a href="${verifyLink}" target="_blank">Hesabımı Təsdiqlə</a>
       `,

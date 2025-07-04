@@ -1,7 +1,5 @@
 import Cart from "../models/Cart.js";
-import Product from "../models/Product.js";
 
-// 🔹 Səbətə məhsul əlavə et
 export const addToCart = async (req, res) => {
   const { productId, quantity } = req.body;
 
@@ -29,7 +27,6 @@ export const addToCart = async (req, res) => {
   }
 };
 
-// 🔹 Səbəti gətir
 export const getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user.id }).populate("items.product");
@@ -42,7 +39,6 @@ export const getCart = async (req, res) => {
   }
 };
 
-// 🔹 Miqdarı dəyiş
 export const updateCartItem = async (req, res) => {
   const { quantity } = req.body;
   const { productId } = req.params;
@@ -64,7 +60,6 @@ export const updateCartItem = async (req, res) => {
   }
 };
 
-// 🔹 Səbətdən sil
 export const removeFromCart = async (req, res) => {
   const { productId } = req.params;
 
@@ -78,5 +73,14 @@ export const removeFromCart = async (req, res) => {
     res.status(200).json({ message: "Silindi", cart });
   } catch (err) {
     res.status(500).json({ message: "Silinmə xətası", error: err.message });
+  }
+};
+
+export const clearCart = async (req, res) => {
+  try {
+    await Cart.findOneAndDelete({ user: req.user.id });
+    res.status(200).json({ message: "Səbət təmizləndi" });
+  } catch (error) {
+    res.status(500).json({ message: "Səbət təmizlənərkən xəta", error: error.message });
   }
 };

@@ -1,0 +1,30 @@
+.section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fff;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;         
+  gap: 20px;                       
+  row-gap: 30px;                   
+  padding: 0 10px;
+}
+
+.message {
+  text-align: center;
+  color: #777;
+  font-size: 1rem;
+  width: 100%;
+}

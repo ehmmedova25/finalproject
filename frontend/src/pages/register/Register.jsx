@@ -4,6 +4,8 @@ import * as Yup from 'yup';
 import axiosInstance from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import styles from './Register.module.css';
+
 
 const Register = () => {
   const navigate = useNavigate();
@@ -15,7 +17,6 @@ const Register = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'user',
   };
 
   const validationSchema = Yup.object({
@@ -27,7 +28,6 @@ const Register = () => {
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password')], 'Şifrələr uyğun deyil')
       .required('Təkrar şifrə tələb olunur'),
-    role: Yup.string().oneOf(['user', 'seller']),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -54,14 +54,6 @@ const Register = () => {
             <div><label>Email:</label><Field type="email" name="email" /><ErrorMessage name="email" component="div" /></div>
             <div><label>Şifrə:</label><Field type="password" name="password" /><ErrorMessage name="password" component="div" /></div>
             <div><label>Təkrar şifrə:</label><Field type="password" name="confirmPassword" /><ErrorMessage name="confirmPassword" component="div" /></div>
-            <div>
-              <label>Rol:</label>
-              <Field as="select" name="role">
-                <option value="user">Müştəri</option>
-                <option value="seller">Aşbaz</option>
-              </Field>
-              <ErrorMessage name="role" component="div" />
-            </div>
             <button type="submit" disabled={isSubmitting}>Qeydiyyatdan keç</button>
           </Form>
         )}

@@ -4,7 +4,7 @@ const initialState = {
   customerInfo: {
     name: "",
     phone: "",
-    deliveryMethod: "pickup", 
+    deliveryMethod: "pickup",
     address: "",
     note: "",
   },

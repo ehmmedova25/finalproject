@@ -1,12 +1,20 @@
-import React from 'react';
+import React from 'react'
+import BestSellersHomepage from './bestSellershomepage/BestSellersHomepage'
+import BannerSlider from './bannerslider/BannerSlider'
+import CategoryPreview from '../../components/categories/CategoryPreview'
+import RecipePreview from '../../components/recipepreview/RecipePreview'
 
 const Home = () => {
   return (
-    <div>
-      <h1>Əsas Səhifə (Home)</h1>
-      <p>Login uğurlu olduqdan sonra bu səhifəyə yönləndirilirsiniz.</p>
-    </div>
-  );
-};
+<>
 
-export default Home;
+<BannerSlider/>
+
+<BestSellersHomepage/>
+<CategoryPreview/>
+<RecipePreview/>
+</> 
+ )
+}
+
+export default Home

@@ -25,13 +25,11 @@ const RecipeCard = ({
 }) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  
-  // Local state for immediate UI updates
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   const [isToCook, setIsToCook] = useState(initialIsToCook);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Update local state when props change
+
   useEffect(() => {
     setIsFavorite(initialIsFavorite);
   }, [initialIsFavorite]);
@@ -52,22 +50,17 @@ const RecipeCard = ({
 
     try {
       setIsLoading(true);
-      
-      // Optimistic update - immediately update UI
       const newFavoriteStatus = !isFavorite;
       setIsFavorite(newFavoriteStatus);
       
-      // Call parent function
+
       const result = await onToggleFavorite(recipe._id);
-      
-      // If parent function returns a specific result, use it
       if (result !== undefined) {
         setIsFavorite(result);
       }
       
     } catch (error) {
       console.error("Favorite toggle error:", error);
-      // Revert optimistic update on error
       setIsFavorite(!isFavorite);
     } finally {
       setIsLoading(false);
@@ -116,11 +109,6 @@ const RecipeCard = ({
       <img src={recipe.image} alt={recipe.title} className={styles.image} />
       <h3 className={styles.title}>{recipe.title}</h3>
 
-      {recipe.createdBy && (
-        <p className={styles.author}>
-          <FaUser /> {recipe.createdBy.firstName} {recipe.createdBy.lastName}
-        </p>
-      )}
 
       <div className={styles.stars}>
         {Array.from({ length: 5 }).map((_, i) =>
@@ -140,27 +128,7 @@ const RecipeCard = ({
       <div className={styles.actions}>
         {showActions && (
           <>
-            <button
-              type="button"
-              title={
-                isAuthenticated
-                  ? isFavorite
-                    ? "Favoridən çıxart"
-                    : "Favori et"
-                  : "Daxil olunmalı"
-              }
-              onClick={handleFavoriteClick}
-              disabled={isLoading}
-              className={`${styles.iconButton} ${
-                isFavorite ? styles.activeFavorite : ""
-              } ${isLoading ? styles.loading : ""}`}
-            >
-              {isFavorite ? (
-                <FaHeart style={{ color: "#ff4757" }} />
-              ) : (
-                <FaRegHeart style={{ color: "#666" }} />
-              )}
-            </button>
+           
 
             <button
               type="button"
